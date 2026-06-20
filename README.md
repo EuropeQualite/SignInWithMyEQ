@@ -1,48 +1,54 @@
-# Sign in with MyEQ
+<h1 align="center">
+    <a href="https://europequalitegroup.com/fr">
+        <picture>
+            <source width="280" media="(prefers-color-scheme: dark)" srcset="https://europequalitegroup.com/img/logo.svg">
+            <img width="280" alt="Europe Qualité" src="https://europequalitegroup.com/img/logo_black.svg">
+        </picture>
+    </a>
+</h1>
 
-A minimal, framework-agnostic example showing how to add **“Sign in with MyEQ”**
-to a web application using **OpenID Connect** (Authorization Code flow with
-**PKCE**). No backend, no client secret — it runs entirely in the browser and
-deploys as static files.
+<h2 align="center">Sign in with MyEQ</h2>
 
-Use it as a starting point for your own integration, or as a reference for the
-button styling and the OIDC wiring.
+<p align="center">
+    <em>A minimal, framework-agnostic example showing how to add <strong>“Sign in with MyEQ”</strong> to any web app — OpenID Connect, Authorization Code flow with PKCE.</em>
+</p>
 
-> Stack: [Vite](https://vitejs.dev) + TypeScript + [`oidc-client-ts`](https://github.com/authts/oidc-client-ts).
-> Vanilla on purpose — the same approach works in React, Vue, Svelte or plain HTML.
+<p align="center">
+    <img alt="OpenID Connect" src="https://img.shields.io/badge/OpenID_Connect-Authorization_Code-007ACC?style=flat-square&logo=openid&logoColor=white">
+    <img alt="PKCE" src="https://img.shields.io/badge/PKCE-S256-2a9d8f?style=flat-square">
+    <img alt="TypeScript" src="https://img.shields.io/badge/TypeScript-5-3178C6?style=flat-square&logo=typescript&logoColor=white">
+    <img alt="Vite" src="https://img.shields.io/badge/Vite-6-646CFF?style=flat-square&logo=vite&logoColor=white">
+    <img alt="License: MIT" src="https://img.shields.io/badge/License-MIT-blue?style=flat-square">
+</p>
 
----
-
-## What it does
-
-1. Renders the branded **Sign in with MyEQ** button.
-2. On click, redirects to the MyEQ issuer to authenticate (Authorization Code + PKCE).
-3. Handles the redirect callback, exchanges the code for tokens.
-4. Shows the signed-in user’s profile claims, with a **Sign out** action.
-
----
-
-## Prerequisites — register a client
-
-Ask a MyEQ administrator to register a **public** OAuth client
-(Internal portal → **System → OAuth Clients** → enable *public client*):
-
-| Field           | Value                                                          |
-| --------------- | ------------------------------------------------------------- |
-| `client_id`     | e.g. `my-demo-rp`                                              |
-| Public client   | **Yes** (PKCE S256 — no secret)                               |
-| Redirect URIs   | exact match, e.g. `http://localhost:5173/callback.html`       |
-| Allowed scopes  | `openid`, `profile`, `email` (add `offline_access`, `erp:employee` as needed) |
-
-Redirect URIs are matched **exactly** (no wildcards), so register every origin
-you run from (local + production).
+<p align="center">
+    <img alt="Sign in with MyEQ — demo" src="docs/preview.png" width="560">
+</p>
 
 ---
 
-## Quick start
+## ✨ What it does
+
+- Renders the branded **Sign in with MyEQ** button (themable, light/dark, several shapes & sizes).
+- Runs the full OpenID Connect login: redirect → **Authorization Code + PKCE** → callback → tokens.
+- Displays the signed-in user’s profile claims, with a **Sign out** action.
+- Ships an interactive **button customizer** so you can preview every variant and copy the markup.
+
+> No backend, no client secret — it runs entirely in the browser and deploys as
+> static files. Vanilla TypeScript on purpose: the same approach drops into
+> React, Vue, Svelte or plain HTML.
+
+---
+
+## 🚀 Quick start
+
+> **Prerequisite** — ask a MyEQ administrator to register a **public** OAuth client
+> (Internal portal → **System → OAuth Clients**, enable *public client*) with your
+> redirect URI, e.g. `http://localhost:5173/callback.html`. Redirect URIs are
+> matched **exactly** (no wildcards), so register every origin you run from.
 
 ```bash
-cp .env.example .env      # then fill in your client_id / authority
+cp .env.example .env      # then set your client_id / authority
 npm install
 npm run dev               # http://localhost:5173
 ```
@@ -53,25 +59,28 @@ Build the static site:
 npm run build && npm run preview
 ```
 
-### Configuration (`.env`)
+---
+
+## 🔧 Configuration
+
+Set these in your `.env` (all prefixed with `VITE_` so Vite exposes them):
 
 | Variable                 | Description                                            |
 | ------------------------ | ------------------------------------------------------ |
-| `VITE_OIDC_AUTHORITY`    | Issuer URL (`https://auth.europequalitegroup.com`)     |
+| `VITE_OIDC_AUTHORITY`    | Issuer URL — `https://auth.europequalitegroup.com`     |
 | `VITE_OIDC_CLIENT_ID`    | Your registered `client_id`                            |
 | `VITE_OIDC_REDIRECT_URI` | Must match a registered redirect URI                   |
 | `VITE_OIDC_SCOPE`        | Space-separated scopes (`openid` is mandatory)         |
 
-The app discovers all endpoints from
+Every endpoint is discovered from
 `${VITE_OIDC_AUTHORITY}/.well-known/openid-configuration`.
 
 ---
 
-## Integrate into your own app
+## 🧩 Integrate into your app
 
 **1. The button** — copy [`src/signin-button.css`](src/signin-button.css) and the
-markup from [`index.html`](index.html). It is plain HTML/CSS, themable via CSS
-custom properties:
+markup below. It is plain HTML/CSS with no dependencies:
 
 ```html
 <button class="eq-signin eq-signin--light eq-signin--md eq-signin--rounded">
@@ -80,11 +89,7 @@ custom properties:
 </button>
 ```
 
-Variants: `--light | --dark | --auto`, `--sm | --md | --lg`,
-`--rounded | --pill`, plus `--block` (full width) and `--icon` (mark only).
-Override `--eq-signin-accent` to retheme.
-
-**2. The OIDC client** — see [`src/auth.ts`](src/auth.ts). The essential part:
+**2. The OIDC client** — see [`src/auth.ts`](src/auth.ts). The essentials:
 
 ```ts
 import { UserManager } from 'oidc-client-ts'
@@ -108,32 +113,57 @@ await userManager.signinRedirectCallback()
 
 ---
 
-## Project layout
+## 🎨 Customize
+
+The button is driven entirely by CSS — combine class modifiers, and override the
+`--eq-signin-*` custom properties to retheme it. Run the demo and use the
+**“Customize the button”** panel to preview combinations and copy the markup.
+
+| Group  | Options                                                        |
+| ------ | ------------------------------------------------------------- |
+| Theme  | `--light` · `--dark` · `--auto` (follows the OS)              |
+| Size   | `--sm` · `--md` · `--lg`                                       |
+| Shape  | `--rounded` · `--pill`                                         |
+| Layout | `--block` (full width) · `--icon` (mark only, drop the label) |
+
+```css
+/* Re-theme via custom properties */
+.eq-signin {
+  --eq-signin-accent: #e42528;   /* focus ring */
+  --eq-signin-radius: 10px;      /* corner radius (rounded shape) */
+}
+```
+
+---
+
+## 🔒 Security
+
+- **PKCE (S256)** is mandatory for every MyEQ client and handled automatically.
+- Tokens are kept in `sessionStorage` (cleared when the tab closes). Browser
+  storage is readable by any script on the page, so for production or long-lived
+  sessions prefer a server-side (confidential) client or a BFF with HttpOnly
+  cookies.
+- The redirect callback only returns to **same-origin** paths (no open redirect).
+- Always register **exact** redirect URIs and serve over **HTTPS** in production.
+
+---
+
+## 📁 Project structure
 
 ```
-index.html            Home page + button markup
+index.html            Home page: demo + button customizer
 callback.html         OAuth redirect page
 src/
   auth.ts             UserManager configuration (adapt this)
   callback.ts         Redirect callback handler
   main.ts             Home page logic (render signed-in / signed-out)
+  playground.ts       Interactive button customizer
   signin-button.css   Framework-agnostic button styles
   styles.css          Demo page styles
 ```
 
 ---
 
-## Security notes
+## 📄 License
 
-- **PKCE (S256)** is mandatory for every MyEQ client and handled automatically.
-- Tokens are kept in `sessionStorage` (cleared when the tab closes). Browser
-  storage is readable by any script on the page, so for production or long-lived
-  sessions prefer a server-side (confidential) client or a BFF with HttpOnly
-  cookies rather than browser-readable storage.
-- The redirect callback only returns to **same-origin** paths (no open redirect).
-- Always register **exact** redirect URIs and serve the app over **HTTPS** in
-  production.
-
-## License
-
-[MIT](LICENSE)
+[MIT](LICENSE) © Europe Qualité

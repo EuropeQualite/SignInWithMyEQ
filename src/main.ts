@@ -3,6 +3,7 @@
 import './styles.css'
 import './signin-button.css'
 import { signIn, signOut, getUser } from './auth'
+import { initPlayground } from './playground'
 import type { User } from 'oidc-client-ts'
 
 const signedOut = document.getElementById('signed-out')!
@@ -49,4 +50,5 @@ async function init(): Promise<void> {
 	}
 }
 
+initPlayground()
 void init()
