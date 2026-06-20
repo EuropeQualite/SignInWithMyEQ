@@ -126,9 +126,11 @@ src/
 ## Security notes
 
 - **PKCE (S256)** is mandatory for every MyEQ client and handled automatically.
-- Tokens are kept in `localStorage` for the demo; for stricter apps use
-  `sessionStorage` or an in-memory store, or move to a server-side
-  (confidential) client.
+- Tokens are kept in `sessionStorage` (cleared when the tab closes). Browser
+  storage is readable by any script on the page, so for production or long-lived
+  sessions prefer a server-side (confidential) client or a BFF with HttpOnly
+  cookies rather than browser-readable storage.
+- The redirect callback only returns to **same-origin** paths (no open redirect).
 - Always register **exact** redirect URIs and serve the app over **HTTPS** in
   production.
 

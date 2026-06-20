@@ -26,9 +26,13 @@ export const userManager = new UserManager({
 	post_logout_redirect_uri: `${location.origin}/`,
 	response_type: 'code',
 	scope: import.meta.env.VITE_OIDC_SCOPE || 'openid profile email',
-	// Persist the session across reloads. For stricter apps, swap to
-	// sessionStorage or an in-memory store.
-	userStore: new WebStorageStateStore({ store: window.localStorage }),
+	// Tokens are kept in sessionStorage by default: they are cleared when the
+	// tab closes, which shrinks the window in which an XSS flaw could exfiltrate
+	// them. Browser storage is still readable by any script on the page, so for
+	// production / long-lived sessions prefer a server-side (confidential) client
+	// or a BFF that keeps tokens in HttpOnly cookies. Swap to window.localStorage
+	// only if you explicitly need the session to survive a tab close.
+	userStore: new WebStorageStateStore({ store: window.sessionStorage }),
 })
 
 /**
