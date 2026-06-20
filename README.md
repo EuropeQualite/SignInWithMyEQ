@@ -131,6 +131,23 @@ await userManager.signinRedirectCallback()
 
 ---
 
+## 📚 Integration guides
+
+Per-stack, end-to-end guides (discovery, PKCE, login, tokens, refresh, logout):
+
+| Stack | Guide |
+| ----- | ----- |
+| Vue 3 (`oidc-client-ts`) | [guides/vue.md](guides/vue.md) |
+| React / Next.js (`react-oidc-context`) | [guides/react.md](guides/react.md) |
+| Node API as a resource server | [guides/node-resource-server.md](guides/node-resource-server.md) |
+| PHP (`league/oauth2-client`) | [guides/php.md](guides/php.md) |
+| Mobile — iOS / Android / React Native (AppAuth) | [guides/mobile.md](guides/mobile.md) |
+
+See [guides/](guides/README.md) for the shared provider reference (endpoints,
+scopes, claims, token formats).
+
+---
+
 ## 🎨 Customize
 
 The button is driven entirely by CSS — combine class modifiers, and override the
@@ -138,11 +155,11 @@ The button is driven entirely by CSS — combine class modifiers, and override t
 **“Customize the button”** panel to preview combinations and copy the markup.
 
 | Group  | Options                                                        |
-| ------ | ------------------------------------------------------------- |
-| Theme  | `--light` · `--dark` · `--auto` (follows the OS)              |
+| ------ | -------------------------------------------------------------- |
+| Theme  | `--light` · `--dark` · `--auto` (follows the OS)               |
 | Size   | `--sm` · `--md` · `--lg`                                       |
 | Shape  | `--rounded` · `--pill`                                         |
-| Layout | `--block` (full width) · `--icon` (mark only, drop the label) |
+| Layout | `--block` (full width) · `--icon` (mark only, drop the label)  |
 
 ```css
 /* Re-theme via custom properties */
@@ -168,7 +185,7 @@ The button is driven entirely by CSS — combine class modifiers, and override t
 
 ## 📁 Project structure
 
-```
+```text
 index.html            Home page: demo + button customizer
 callback.html         OAuth redirect page
 src/
