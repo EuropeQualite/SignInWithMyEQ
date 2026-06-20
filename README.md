@@ -40,12 +40,30 @@
 
 ---
 
+## 🔑 Getting access
+
+MyEQ is a **private identity provider** — credentials are **not self-service**.
+There is no public sign-up: your `client_id`, allowed scopes and redirect URIs
+are provisioned by **Europe Qualité administrators**.
+
+To connect your application, email
+**[support@europequalitegroup.com](mailto:support@europequalitegroup.com)** with:
+
+- your application name and the **origin(s)** it will run from;
+- the exact **redirect URI(s)** (e.g. `https://yourapp.example.com/callback.html`);
+- the **scopes** you need (at minimum `openid`; typically `profile`, `email`).
+
+You’ll receive a `client_id` (and, for confidential server-side clients, a
+secret) to drop into your configuration. Redirect URIs are matched **exactly**
+(no wildcards), so list every origin up front.
+
+---
+
 ## 🚀 Quick start
 
-> **Prerequisite** — ask a MyEQ administrator to register a **public** OAuth client
-> (Internal portal → **System → OAuth Clients**, enable *public client*) with your
-> redirect URI, e.g. `http://localhost:5173/callback.html`. Redirect URIs are
-> matched **exactly** (no wildcards), so register every origin you run from.
+> **Prerequisite** — a `client_id` issued by Europe Qualité (see
+> [Getting access](#-getting-access)). Use `http://localhost:5173/callback.html`
+> as a redirect URI for local development.
 
 ```bash
 cp .env.example .env      # then set your client_id / authority

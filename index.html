@@ -2,9 +2,21 @@
 <html lang="en">
 	<head>
 		<meta charset="UTF-8" />
-		<link rel="icon" href="/favicon.ico" />
+		<link rel="icon" href="/favicon.ico?v=1" />
 		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
 		<title>Sign in with MyEQ — demo</title>
+		<!-- Critical: keep the toast out of flow and hidden from the very first
+		     paint, before the bundled CSS loads, so it never flashes or shifts the
+		     layout on (re)load. `:not(.toast--visible)` lets the shown state win. -->
+		<style>
+			.toast {
+				position: fixed;
+			}
+			.toast:not(.toast--visible) {
+				opacity: 0;
+				visibility: hidden;
+			}
+		</style>
 	</head>
 	<body>
 		<div class="page">
@@ -139,9 +151,11 @@
 			<div class="toast__body">
 				<strong>This is a demo.</strong>
 				There’s no app to sign in to here, so the flow stops at this step —
-				that’s expected. To run a real sign-in, register a public MyEQ client
-				and set <code>VITE_OIDC_CLIENT_ID</code> in your <code>.env</code>
-				(see the <a href="https://github.com/EuropeQualite/SignInWithMyEQ#-quick-start">README</a>).
+				that’s expected. MyEQ credentials are issued by Europe Qualité, not
+				self-service: to connect your own app, email
+				<a href="mailto:support@europequalitegroup.com">support@europequalitegroup.com</a>
+				to request a client (see the
+				<a href="https://github.com/EuropeQualite/SignInWithMyEQ#-getting-access">README</a>).
 			</div>
 			<button id="demo-toast-close" class="toast__close" type="button" aria-label="Dismiss">
 				&times;
