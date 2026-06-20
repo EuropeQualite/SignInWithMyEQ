@@ -5,18 +5,9 @@
 		<link rel="icon" href="/favicon.ico?v=1" />
 		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
 		<title>Sign in with MyEQ — demo</title>
-		<!-- Critical: keep the toast out of flow and hidden from the very first
-		     paint, before the bundled CSS loads, so it never flashes or shifts the
-		     layout on (re)load. `:not(.toast--visible)` lets the shown state win. -->
-		<style>
-			.toast {
-				position: fixed;
-			}
-			.toast:not(.toast--visible) {
-				opacity: 0;
-				visibility: hidden;
-			}
-		</style>
+		<!-- Render-blocking <link> (not a JS import) to avoid a flash of unstyled content. -->
+		<link rel="stylesheet" href="/src/styles.css" />
+		<link rel="stylesheet" href="/src/signin-button.css" />
 	</head>
 	<body>
 		<div class="page">
@@ -143,9 +134,6 @@
 			</section>
 		</div>
 
-		<!-- Demo notice — shown only after clicking the button while the example
-		     placeholder client is configured. Fixed position so it never shifts
-		     the page layout. -->
 		<div id="demo-toast" class="toast" role="status" aria-live="polite">
 			<span class="toast__icon" aria-hidden="true">i</span>
 			<div class="toast__body">

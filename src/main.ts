@@ -1,7 +1,4 @@
-// Home page logic: render the signed-out or signed-in view depending on the
-// current MyEQ session, and wire the button + sign-out action.
-import './styles.css'
-import './signin-button.css'
+// Styles are loaded via <link> in index.html (render-blocking) to avoid FOUC.
 import { signIn, signOut, getUser, isDemoPlaceholder } from './auth'
 import { initPlayground } from './playground'
 import type { User } from 'oidc-client-ts'
@@ -50,8 +47,6 @@ document.getElementById('demo-toast-close')!.addEventListener('click', () => {
 })
 
 signInButton.addEventListener('click', () => {
-	// With the example placeholder client there is no real app to sign in to, so
-	// explain that instead of redirecting to an issuer error page.
 	if (isDemoPlaceholder) {
 		showDemoToast()
 		return

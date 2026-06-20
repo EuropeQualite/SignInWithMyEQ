@@ -300,9 +300,7 @@ code {
 	}
 }
 
-/* ── Demo toast ──────────────────────────────────────────────────────────── */
-/* position: fixed keeps it out of normal flow, so showing it never shifts the
-   page layout (no jump). */
+/* ── Demo toast (fixed → never shifts the layout) ────────────────────────── */
 .toast {
 	position: fixed;
 	left: 50%;

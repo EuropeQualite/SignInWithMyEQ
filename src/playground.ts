@@ -1,12 +1,5 @@
-// Interactive button customizer. Demonstrates how the framework-agnostic button
-// is themed: class modifiers (theme / size / shape / icon-only / block) plus
-// overridable `--eq-signin-*` CSS custom properties (here: corner radius).
-// It keeps a live preview in sync and emits the exact HTML markup to copy.
-
 const MARK = `<svg viewBox="0 0 512 512" role="presentation"><rect width="512" height="512" rx="104" fill="#e42528"/><path fill="#fff" d="M365.6,381.5c-6.6-6.4-15.3-9.9-24.5-9.9l-205,.3v70.6l205-.3c9.4,0,18.3-3.7,24.9-10.3,6.4-6.4,10.1-15.6,10-25.2,0-9.6-3.9-18.7-10.4-25.1Z"/><path fill="#fff" d="M375.6,104.9v-.2c0-9.6-3.9-18.5-10.7-25.1-6.6-6.5-15.4-10-24.6-10l-204.3.3v70.5l204.3-.2c19.5,0,35.3-15.8,35.3-35.3Z"/><path fill="#fff" d="M289.3,280.9c6.4-6.4,10.1-15.5,10-25,0-9.6-3.8-18.8-10.4-25.3-6.6-6.4-15.3-9.9-24.6-9.9l-128.3.2v70.6l128.4-.2c9.4,0,18.3-3.7,24.9-10.3Z"/></svg>`
 
-// Each size ships a default radius; we only emit a `--eq-signin-radius` override
-// when the user picks a different value, so the snippet stays minimal.
 const DEFAULT_RADIUS: Record<string, number> = { sm: 8, md: 10, lg: 12 }
 
 interface Config {
@@ -53,8 +46,6 @@ function classList(): string {
 	return c.join(' ')
 }
 
-// Radius override only applies to the rounded shape (pill is always fully round)
-// and only when it differs from the size's default.
 function styleAttr(): string {
 	if (config.shape === 'pill') return ''
 	if (config.radius === DEFAULT_RADIUS[config.size]) return ''
@@ -85,10 +76,7 @@ function renderSnippet(): void {
 }
 
 function syncDisabledStates(): void {
-	// Radius is meaningless for the pill shape; the label/full-width are
-	// meaningless for an icon-only button. Reflect that in the controls.
-	const radiusField = $<HTMLElement>('radius-field')
-	radiusField.classList.toggle('is-disabled', config.shape === 'pill')
+	$<HTMLElement>('radius-field').classList.toggle('is-disabled', config.shape === 'pill')
 	$<HTMLInputElement>('ctl-radius').disabled = config.shape === 'pill'
 	$<HTMLInputElement>('ctl-label').disabled = config.iconOnly
 	$<HTMLInputElement>('ctl-block').disabled = config.iconOnly
@@ -107,7 +95,6 @@ export function initPlayground(): void {
 	})
 	$<HTMLSelectElement>('ctl-size').addEventListener('change', (e) => {
 		config.size = (e.target as HTMLSelectElement).value
-		// Snap the radius to the new size's default so the slider stays intuitive.
 		config.radius = DEFAULT_RADIUS[config.size]
 		$<HTMLInputElement>('ctl-radius').value = String(config.radius)
 		$('radius-value').textContent = `${config.radius}px`
@@ -135,18 +122,16 @@ export function initPlayground(): void {
 		render()
 	})
 
-	// Preview background toggle (does not change the button, only the backdrop).
-	document.querySelectorAll<HTMLButtonElement>('.preview__surface-toggle [data-surface]').forEach(
-		(btn) => {
+	document
+		.querySelectorAll<HTMLButtonElement>('.preview__surface-toggle [data-surface]')
+		.forEach((btn) => {
 			btn.addEventListener('click', () => {
-				const surface = btn.dataset.surface ?? 'light'
-				$('preview-stage').dataset.surface = surface
+				$('preview-stage').dataset.surface = btn.dataset.surface ?? 'light'
 				document
 					.querySelectorAll('.preview__surface-toggle [data-surface]')
 					.forEach((b) => b.classList.toggle('is-active', b === btn))
 			})
-		},
-	)
+		})
 
 	$<HTMLButtonElement>('copy-snippet').addEventListener('click', async () => {
 		const button = $<HTMLButtonElement>('copy-snippet')

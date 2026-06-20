@@ -1,22 +1,5 @@
-/*
- * "Sign in with MyEQ" button — framework-agnostic styles.
- *
- * Copy this file (and the matching markup from the README) into any project;
- * it has no dependencies. Every colour is a CSS custom property, so you can
- * re-theme the button by overriding `--eq-signin-*` on `.eq-signin`.
- *
- * Markup:
- *   <button class="eq-signin eq-signin--light eq-signin--md eq-signin--rounded">
- *     <span class="eq-signin__logo"><!-- inline EQ mark SVG --></span>
- *     <span class="eq-signin__label">Sign in with MyEQ</span>
- *   </button>
- *
- * Modifiers:
- *   theme  → eq-signin--light | eq-signin--dark | eq-signin--auto
- *   size   → eq-signin--sm | eq-signin--md | eq-signin--lg
- *   shape  → eq-signin--rounded | eq-signin--pill
- *   layout → eq-signin--block (full width) | eq-signin--icon (mark only, drop the label)
- */
+/* "Sign in with MyEQ" button — framework-agnostic; re-theme via --eq-signin-* custom properties.
+   Modifiers: --light|--dark|--auto, --sm|--md|--lg, --rounded|--pill, --block, --icon. */
 
 .eq-signin {
 	--eq-signin-accent: #e42528;
