@@ -2,7 +2,7 @@
 // current MyEQ session, and wire the button + sign-out action.
 import './styles.css'
 import './signin-button.css'
-import { signIn, signOut, getUser } from './auth'
+import { signIn, signOut, getUser, isDemoPlaceholder } from './auth'
 import { initPlayground } from './playground'
 import type { User } from 'oidc-client-ts'
 
@@ -35,7 +35,27 @@ function renderSignedIn(user: User): void {
 	signedIn.classList.remove('hidden')
 }
 
+const demoToast = document.getElementById('demo-toast')!
+let toastTimer: number | undefined
+
+function showDemoToast(): void {
+	demoToast.classList.add('toast--visible')
+	if (toastTimer) clearTimeout(toastTimer)
+	toastTimer = window.setTimeout(() => demoToast.classList.remove('toast--visible'), 9000)
+}
+
+document.getElementById('demo-toast-close')!.addEventListener('click', () => {
+	demoToast.classList.remove('toast--visible')
+	if (toastTimer) clearTimeout(toastTimer)
+})
+
 signInButton.addEventListener('click', () => {
+	// With the example placeholder client there is no real app to sign in to, so
+	// explain that instead of redirecting to an issuer error page.
+	if (isDemoPlaceholder) {
+		showDemoToast()
+		return
+	}
 	void signIn()
 })
 

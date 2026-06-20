@@ -299,3 +299,96 @@ code {
 		grid-template-columns: 1fr;
 	}
 }
+
+/* ── Demo toast ──────────────────────────────────────────────────────────── */
+/* position: fixed keeps it out of normal flow, so showing it never shifts the
+   page layout (no jump). */
+.toast {
+	position: fixed;
+	left: 50%;
+	bottom: 24px;
+	transform: translateX(-50%) translateY(12px);
+	z-index: 1000;
+	width: min(460px, calc(100vw - 32px));
+	display: flex;
+	align-items: flex-start;
+	gap: 12px;
+	padding: 14px 16px;
+	background: #1f2330;
+	color: #f3f4f6;
+	border-radius: 12px;
+	box-shadow: 0 12px 34px rgba(0, 0, 0, 0.28);
+	font-size: 13px;
+	line-height: 1.55;
+	opacity: 0;
+	visibility: hidden;
+	pointer-events: none;
+	transition:
+		opacity 0.2s ease,
+		transform 0.2s ease,
+		visibility 0.2s ease;
+}
+
+.toast--visible {
+	opacity: 1;
+	visibility: visible;
+	pointer-events: auto;
+	transform: translateX(-50%) translateY(0);
+}
+
+.toast__icon {
+	flex: 0 0 auto;
+	width: 20px;
+	height: 20px;
+	border-radius: 50%;
+	background: var(--accent);
+	color: #fff;
+	font-style: italic;
+	font-weight: 700;
+	font-size: 13px;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	margin-top: 1px;
+}
+
+.toast__body {
+	flex: 1 1 auto;
+}
+
+.toast__body code {
+	background: rgba(255, 255, 255, 0.14);
+	color: #fff;
+	padding: 1px 5px;
+	border-radius: 4px;
+}
+
+.toast__body a {
+	color: #fff;
+	text-decoration: underline;
+}
+
+.toast__close {
+	flex: 0 0 auto;
+	background: none;
+	border: none;
+	color: #cbd5e1;
+	font-size: 20px;
+	line-height: 1;
+	cursor: pointer;
+	padding: 0 2px;
+}
+
+.toast__close:hover {
+	color: #fff;
+}
+
+@media (prefers-reduced-motion: reduce) {
+	.toast {
+		transition: opacity 0.2s ease, visibility 0.2s ease;
+		transform: translateX(-50%);
+	}
+	.toast--visible {
+		transform: translateX(-50%);
+	}
+}

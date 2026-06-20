@@ -18,6 +18,11 @@ if (!authority || !clientId) {
 	)
 }
 
+// The placeholder client_id shipped in .env.example. While it is in use there is
+// no real registered client, so the redirect would only land on an issuer error.
+// The UI uses this to show an explanatory note instead of redirecting.
+export const isDemoPlaceholder = clientId === 'my-demo-rp'
+
 export const userManager = new UserManager({
 	authority,
 	client_id: clientId,

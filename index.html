@@ -2,6 +2,7 @@
 <html lang="en">
 	<head>
 		<meta charset="UTF-8" />
+		<link rel="icon" href="/favicon.ico" />
 		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
 		<title>Sign in with MyEQ — demo</title>
 	</head>
@@ -128,6 +129,23 @@
 					</div>
 				</div>
 			</section>
+		</div>
+
+		<!-- Demo notice — shown only after clicking the button while the example
+		     placeholder client is configured. Fixed position so it never shifts
+		     the page layout. -->
+		<div id="demo-toast" class="toast" role="status" aria-live="polite">
+			<span class="toast__icon" aria-hidden="true">i</span>
+			<div class="toast__body">
+				<strong>This is a demo.</strong>
+				There’s no app to sign in to here, so the flow stops at this step —
+				that’s expected. To run a real sign-in, register a public MyEQ client
+				and set <code>VITE_OIDC_CLIENT_ID</code> in your <code>.env</code>
+				(see the <a href="https://github.com/EuropeQualite/SignInWithMyEQ#-quick-start">README</a>).
+			</div>
+			<button id="demo-toast-close" class="toast__close" type="button" aria-label="Dismiss">
+				&times;
+			</button>
 		</div>
 
 		<script type="module" src="/src/main.ts"></script>
