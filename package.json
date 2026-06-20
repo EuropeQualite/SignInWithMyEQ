@@ -1,0 +1,22 @@
+{
+	"name": "sign-in-with-myeq",
+	"version": "0.1.0",
+	"private": true,
+	"description": "Minimal reference Relying Party showing how to add \"Sign in with MyEQ\" (OpenID Connect, Authorization Code + PKCE) to any web app.",
+	"type": "module",
+	"scripts": {
+		"dev": "vite",
+		"build": "tsc --noEmit && vite build",
+		"preview": "vite preview",
+		"type-check": "tsc --noEmit"
+	},
+	"dependencies": {
+		"oidc-client-ts": "^3.1.0"
+	},
+	"devDependencies": {
+		"@types/node": "^22.10.2",
+		"typescript": "^5.6.3",
+		"vite": "^6.0.5"
+	},
+	"license": "MIT"
+}

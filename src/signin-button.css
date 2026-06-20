@@ -1,0 +1,205 @@
+/*
+ * "Sign in with MyEQ" button — framework-agnostic styles.
+ *
+ * Copy this file (and the matching markup from the README) into any project;
+ * it has no dependencies. Every colour is a CSS custom property, so you can
+ * re-theme the button by overriding `--eq-signin-*` on `.eq-signin`.
+ *
+ * Markup:
+ *   <button class="eq-signin eq-signin--light eq-signin--md eq-signin--rounded">
+ *     <span class="eq-signin__logo"><!-- inline EQ mark SVG --></span>
+ *     <span class="eq-signin__label">Sign in with MyEQ</span>
+ *   </button>
+ *
+ * Modifiers:
+ *   theme  → eq-signin--light | eq-signin--dark | eq-signin--auto
+ *   size   → eq-signin--sm | eq-signin--md | eq-signin--lg
+ *   shape  → eq-signin--rounded | eq-signin--pill
+ *   layout → eq-signin--block (full width) | eq-signin--icon (mark only, drop the label)
+ */
+
+.eq-signin {
+	--eq-signin-accent: #e42528;
+	--eq-signin-radius: 10px;
+	--eq-signin-font:
+		-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial,
+		sans-serif;
+
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	gap: 0.625em;
+	box-sizing: border-box;
+	margin: 0;
+	border: 1px solid var(--eq-signin-border);
+	border-radius: var(--eq-signin-radius);
+	background: var(--eq-signin-bg);
+	color: var(--eq-signin-fg);
+	font-family: var(--eq-signin-font);
+	font-weight: 500;
+	line-height: 1;
+	letter-spacing: -0.01em;
+	cursor: pointer;
+	user-select: none;
+	-webkit-font-smoothing: antialiased;
+	transition:
+		background-color 0.15s ease,
+		border-color 0.15s ease,
+		box-shadow 0.15s ease,
+		transform 0.06s ease;
+}
+
+.eq-signin__logo {
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	width: 1.15em;
+	height: 1.15em;
+	flex: 0 0 auto;
+	border-radius: 0.26em;
+	overflow: hidden;
+}
+
+.eq-signin__logo svg {
+	width: 100%;
+	height: 100%;
+	display: block;
+}
+
+.eq-signin__label {
+	display: inline-block;
+	white-space: nowrap;
+}
+
+/* ── Sizes ───────────────────────────────────────────────────────────────── */
+.eq-signin--sm {
+	height: 36px;
+	padding: 0 0.875rem;
+	font-size: 13px;
+	--eq-signin-radius: 8px;
+}
+.eq-signin--md {
+	height: 44px;
+	padding: 0 1.25rem;
+	font-size: 14px;
+}
+.eq-signin--lg {
+	height: 52px;
+	padding: 0 1.625rem;
+	font-size: 16px;
+	--eq-signin-radius: 12px;
+}
+
+.eq-signin--block {
+	display: flex;
+	width: 100%;
+}
+
+/* ── Shapes ──────────────────────────────────────────────────────────────── */
+.eq-signin--pill {
+	--eq-signin-radius: 999px;
+}
+
+/* ── Icon-only (compact, square) ─────────────────────────────────────────── */
+.eq-signin--icon {
+	gap: 0;
+	padding: 0;
+	aspect-ratio: 1 / 1;
+}
+.eq-signin--icon.eq-signin--sm {
+	width: 36px;
+}
+.eq-signin--icon.eq-signin--md {
+	width: 44px;
+}
+.eq-signin--icon.eq-signin--lg {
+	width: 52px;
+}
+.eq-signin--icon .eq-signin__logo {
+	width: 1.4em;
+	height: 1.4em;
+}
+
+/* ── Light theme ─────────────────────────────────────────────────────────── */
+.eq-signin--light {
+	--eq-signin-bg: #ffffff;
+	--eq-signin-fg: #1f1f1f;
+	--eq-signin-border: #dadce0;
+}
+.eq-signin--light:hover:not(:disabled) {
+	background: #f7f8fa;
+	box-shadow: 0 1px 2px rgba(60, 64, 67, 0.14);
+}
+
+/* ── Dark theme ──────────────────────────────────────────────────────────── */
+.eq-signin--dark {
+	--eq-signin-bg: #131722;
+	--eq-signin-fg: #ffffff;
+	--eq-signin-border: transparent;
+}
+.eq-signin--dark:hover:not(:disabled) {
+	background: #1c2130;
+	box-shadow: 0 1px 3px rgba(0, 0, 0, 0.45);
+}
+
+/* ── Auto theme (follows the OS) ─────────────────────────────────────────── */
+.eq-signin--auto {
+	--eq-signin-bg: #ffffff;
+	--eq-signin-fg: #1f1f1f;
+	--eq-signin-border: #dadce0;
+}
+.eq-signin--auto:hover:not(:disabled) {
+	background: #f7f8fa;
+	box-shadow: 0 1px 2px rgba(60, 64, 67, 0.14);
+}
+@media (prefers-color-scheme: dark) {
+	.eq-signin--auto {
+		--eq-signin-bg: #131722;
+		--eq-signin-fg: #ffffff;
+		--eq-signin-border: transparent;
+	}
+	.eq-signin--auto:hover:not(:disabled) {
+		background: #1c2130;
+		box-shadow: 0 1px 3px rgba(0, 0, 0, 0.45);
+	}
+}
+
+/* ── Interaction states ──────────────────────────────────────────────────── */
+.eq-signin:active:not(:disabled) {
+	transform: translateY(0.5px);
+}
+.eq-signin:focus-visible {
+	outline: 2px solid var(--eq-signin-accent);
+	outline-offset: 2px;
+}
+.eq-signin:disabled {
+	cursor: not-allowed;
+	opacity: 0.5;
+}
+
+/* ── Loading spinner ─────────────────────────────────────────────────────── */
+.eq-signin__spinner {
+	width: 1.15em;
+	height: 1.15em;
+	flex: 0 0 auto;
+	border: 2px solid currentColor;
+	border-top-color: transparent;
+	border-radius: 50%;
+	opacity: 0.85;
+	animation: eq-signin-spin 0.7s linear infinite;
+}
+
+@keyframes eq-signin-spin {
+	to {
+		transform: rotate(360deg);
+	}
+}
+
+@media (prefers-reduced-motion: reduce) {
+	.eq-signin {
+		transition: none;
+	}
+	.eq-signin__spinner {
+		animation-duration: 1.4s;
+	}
+}
