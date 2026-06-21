@@ -181,6 +181,26 @@ The button is driven entirely by CSS — combine class modifiers, and override t
 - The redirect callback only returns to **same-origin** paths (no open redirect).
 - Always register **exact** redirect URIs and serve over **HTTPS** in production.
 
+### Content Security Policy & headers
+
+Both pages ship a strict CSP that locks scripts/styles/images to the same origin
+and restricts `connect-src` to the MyEQ IdP — the primary containment against
+XSS token exfiltration. Two delivery mechanisms, by design:
+
+- **In-document `<meta>`** (in `index.html` / `callback.html`): a fallback for
+  static hosts that can't set response headers (e.g. GitHub Pages).
+- **Response headers** ([`public/_headers`](public/_headers), copied to `dist/`):
+  the real mechanism — and the **only** one that delivers framing protection.
+  `frame-ancestors`, `X-Frame-Options` and HSTS are **ignored** in a `<meta>`
+  tag, so always serve them as headers in production. The `_headers` format is
+  read by Netlify and Cloudflare Pages; for nginx / Cloud Run set the equivalent
+  headers in your server config.
+
+If you point the app at your own IdP, **add its origin to `connect-src`** in both
+the `<meta>` tags and `public/_headers`, otherwise discovery and token calls are
+blocked. The dev server relaxes `connect-src`/`style-src` automatically for HMR
+(see [`vite.config.ts`](vite.config.ts)); the production build stays strict.
+
 ---
 
 ## 📁 Project structure

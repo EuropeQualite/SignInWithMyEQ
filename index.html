@@ -2,6 +2,17 @@
 <html lang="en">
 	<head>
 		<meta charset="UTF-8" />
+		<!--
+			Content Security Policy — in-document fallback for static hosts that
+			can't set response headers (e.g. GitHub Pages). `frame-ancestors`,
+			`X-Frame-Options` and HSTS are ignored in a <meta> tag, so framing
+			protection is delivered via response headers (see public/_headers).
+			Add your own IdP origin to `connect-src` if you don't use auth.europequalitegroup.com.
+		-->
+		<meta
+			http-equiv="Content-Security-Policy"
+			content="default-src 'self'; script-src 'self'; style-src 'self'; img-src 'self'; connect-src 'self' https://auth.europequalitegroup.com https://beta.auth.europequalitegroup.com; form-action 'self'; base-uri 'none'; object-src 'none'"
+		/>
 		<link rel="icon" href="/favicon.ico?v=1" />
 		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
 		<title>Sign in with MyEQ — demo</title>

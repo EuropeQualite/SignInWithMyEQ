@@ -55,9 +55,13 @@ function styleAttr(): string {
 function renderPreview(): void {
 	const btn = $<HTMLButtonElement>('preview-button')
 	btn.className = classList()
-	const style = styleAttr()
-	if (style) btn.setAttribute('style', style)
-	else btn.removeAttribute('style')
+	// Apply the custom radius via the CSSOM (not a `style` attribute) so the
+	// page works under a strict `style-src 'self'` CSP with no `'unsafe-inline'`.
+	if (config.shape !== 'pill' && config.radius !== DEFAULT_RADIUS[config.size]) {
+		btn.style.setProperty('--eq-signin-radius', `${config.radius}px`)
+	} else {
+		btn.style.removeProperty('--eq-signin-radius')
+	}
 	btn.setAttribute('aria-label', config.label)
 	btn.innerHTML =
 		`<span class="eq-signin__logo" aria-hidden="true">${MARK}</span>` +

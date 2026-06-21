@@ -1,0 +1,13 @@
+# Security response headers for static hosts that read a `_headers` file
+# (Netlify, Cloudflare Pages). Copied verbatim into the build output (dist/).
+# This is the real delivery mechanism for `frame-ancestors`, `X-Frame-Options`
+# and HSTS, which browsers ignore in an in-document <meta> CSP. For other hosts
+# (nginx, Cloud Run, etc.) set the equivalent headers in your server config.
+#
+# Add your own IdP origin to `connect-src` if you don't use auth.europequalitegroup.com.
+/*
+  Content-Security-Policy: default-src 'self'; script-src 'self'; style-src 'self'; img-src 'self'; connect-src 'self' https://auth.europequalitegroup.com https://beta.auth.europequalitegroup.com; form-action 'self'; frame-ancestors 'none'; base-uri 'none'; object-src 'none'
+  X-Frame-Options: DENY
+  X-Content-Type-Options: nosniff
+  Referrer-Policy: no-referrer
+  Strict-Transport-Security: max-age=63072000; includeSubDomains; preload
