@@ -77,11 +77,23 @@ import { onMounted } from 'vue'
 import { useRouter } from 'vue-router'
 import { userManager } from '../auth'
 
+// Same-origin guard against an open redirect via the persisted `state`.
+function safeReturnTo(value: unknown): string {
+  if (typeof value !== 'string') return '/'
+  if (!value.startsWith('/') || value.startsWith('//') || value.startsWith('/\\')) return '/'
+  try {
+    const url = new URL(value, location.origin)
+    return url.origin === location.origin ? url.pathname + url.search + url.hash : '/'
+  } catch {
+    return '/'
+  }
+}
+
 const router = useRouter()
 onMounted(async () => {
   const u = await userManager.signinRedirectCallback()
-  const returnTo = (u.state as { returnTo?: string } | undefined)?.returnTo
-  router.replace(returnTo ?? '/')
+  const returnTo = (u.state as { returnTo?: unknown } | undefined)?.returnTo
+  router.replace(safeReturnTo(returnTo))
 })
 </script>
 

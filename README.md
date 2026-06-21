@@ -110,7 +110,7 @@ markup below. It is plain HTML/CSS with no dependencies:
 **2. The OIDC client** — see [`src/auth.ts`](src/auth.ts). The essentials:
 
 ```ts
-import { UserManager } from 'oidc-client-ts'
+import { UserManager, WebStorageStateStore } from 'oidc-client-ts'
 
 const userManager = new UserManager({
   authority: 'https://auth.europequalitegroup.com',
@@ -118,6 +118,8 @@ const userManager = new UserManager({
   redirect_uri: window.location.origin + '/callback.html',
   response_type: 'code',          // PKCE is enabled automatically
   scope: 'openid profile email',
+  // Keep tokens in sessionStorage (cleared on tab close), not the default localStorage
+  userStore: new WebStorageStateStore({ store: window.sessionStorage }),
 })
 
 button.onclick = () => userManager.signinRedirect()
